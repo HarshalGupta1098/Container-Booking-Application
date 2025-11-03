@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/container_booking
+      database: container_booking
+
+logging:
+  level:
+    root: INFO
+    com.shipping.booking: INFO

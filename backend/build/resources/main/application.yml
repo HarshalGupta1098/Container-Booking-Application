@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: container-booking-service
+  
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/container_booking
+      database: container_booking
+      auto-index-creation: true
+  
+  security:
+    user:
+      name: admin
+      password: admin123
+
+# External service configuration
+external:
+  availability-service:
+    url: https://company.com/api/bookings/checkAvailable
+    timeout: 5000
+    max-retries: 3
+
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+  health:
+    mongo:
+      enabled: true
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    com.shipping.booking.service.AvailabilityService: DEBUG
+    org.springframework.data.mongodb: DEBUG
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+
+# OpenAPI/Swagger configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true

@@ -1,0 +1,224 @@
+{
+  "info": {
+    "name": "Container Booking API",
+    "description": "API for checking container availability and creating bookings",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345"
+  },
+  "item": [
+    {
+      "name": "Check Availability - DRY Container",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"containerType\": \"DRY\",\n  \"containerSize\": 20,\n  \"origin\": \"Southampton\",\n  \"destination\": \"Singapore\",\n  \"quantity\": 5\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/bookings/check-availability",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "bookings", "check-availability"]
+        },
+        "description": "Check if DRY containers are available"
+      },
+      "response": []
+    },
+    {
+      "name": "Check Availability - REEFER Container",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"containerType\": \"REEFER\",\n  \"containerSize\": 40,\n  \"origin\": \"Rotterdam\",\n  \"destination\": \"New York\",\n  \"quantity\": 10\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/bookings/check-availability",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "bookings", "check-availability"]
+        },
+        "description": "Check if REEFER containers are available"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Booking - DRY Container",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"containerType\": \"DRY\",\n  \"containerSize\": 20,\n  \"origin\": \"Southampton\",\n  \"destination\": \"Singapore\",\n  \"quantity\": 5,\n  \"timestamp\": \"2024-11-01T10:30:00Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/bookings/create",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "bookings", "create"]
+        },
+        "description": "Create a new DRY container booking"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Booking - REEFER Container",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"containerType\": \"REEFER\",\n  \"containerSize\": 40,\n  \"origin\": \"Rotterdam\",\n  \"destination\": \"Hamburg\",\n  \"quantity\": 15,\n  \"timestamp\": \"2024-11-01T14:45:00Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/bookings/create",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "bookings", "create"]
+        },
+        "description": "Create a new REEFER container booking"
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Request - Wrong Container Size",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"containerType\": \"DRY\",\n  \"containerSize\": 30,\n  \"origin\": \"Southampton\",\n  \"destination\": \"Singapore\",\n  \"quantity\": 5,\n  \"timestamp\": \"2024-11-01T10:30:00Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/bookings/create",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "bookings", "create"]
+        },
+        "description": "Test validation - should return 400 Bad Request"
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Request - Origin Too Short",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"containerType\": \"DRY\",\n  \"containerSize\": 20,\n  \"origin\": \"NYC\",\n  \"destination\": \"Singapore\",\n  \"quantity\": 5,\n  \"timestamp\": \"2024-11-01T10:30:00Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/bookings/create",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "bookings", "create"]
+        },
+        "description": "Test validation - origin must be at least 5 characters"
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Request - Quantity Exceeds Max",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"containerType\": \"DRY\",\n  \"containerSize\": 20,\n  \"origin\": \"Southampton\",\n  \"destination\": \"Singapore\",\n  \"quantity\": 150,\n  \"timestamp\": \"2024-11-01T10:30:00Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/bookings/create",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "bookings", "create"]
+        },
+        "description": "Test validation - quantity must not exceed 100"
+      },
+      "response": []
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/actuator/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["actuator", "health"]
+        },
+        "description": "Check application health status"
+      },
+      "response": []
+    },
+    {
+      "name": "Swagger UI",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/swagger-ui.html",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["swagger-ui.html"]
+        },
+        "description": "Access Swagger UI documentation"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}
